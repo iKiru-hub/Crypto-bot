@@ -773,7 +773,7 @@ class Env:
             # wait for buying
             if self.trader.get_status() == 'free':
 
-                hlc,v price = self.get_next_fake_hlc(t)
+                hlcv, price = self.get_next_fake_hlc(t)
 
                 # check buy conditions
                 if self.trader.check_control(hlcv=hlcv, kind='buy'):
