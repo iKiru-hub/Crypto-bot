@@ -418,7 +418,7 @@ class Env:
 
         return self.coin
 
-    def get_next_hlc(self, same=False):
+    def get_next_hlcv(self, same=False):
 
         """ return the next/same coin's hlc """
 
@@ -651,10 +651,10 @@ class Env:
             # wait for buying
             if self.trader.get_status() == 'free':
 
-                hlc, price = self.get_next_hlc()
+                hlc, price = self.get_next_hlcv()
 
                 # check buy conditions
-                if self.trader.check_control(hlc=hlc, kind='buy'):
+                if self.trader.check_control(hlcv=hlcv, kind='buy'):
 
                     # actually buying
                     quantity = self.trader.buy(price=price, coin=self.coin)
@@ -675,17 +675,17 @@ class Env:
             # wait for selling
             else:
 
-                hlc, price = self.get_next_hlc(same=True)
+                hlcv, price = self.get_next_hlcv(same=True)
 
                 # check sell conditions
-                if self.trader.check_control(hlc=hlc, kind='sell'):
+                if self.trader.check_control(hlcv=hlcv, kind='sell'):
 
                     # actually selling
                     _ = self.trader.sell(price=price)
 
                     # check quantity
                     if quantity < minqty:
-                        print('??the quantity has changed? (', quantity, ')')
+                        print('?? the quantity has changed? (', quantity, ')')
                         continue
 
                     # run order
@@ -708,7 +708,7 @@ class Env:
         print('\n<Session Terminated> >logs saved< ')
 
 
-    def get_next_fake_hlc(self, t: int, same=False):
+    def get_next_fake_hlcv(self, t: int, same=False):
 
         """ return next indexed hlc """
 
@@ -773,22 +773,22 @@ class Env:
             # wait for buying
             if self.trader.get_status() == 'free':
 
-                hlc, price = self.get_next_fake_hlc(t)
+                hlc,v price = self.get_next_fake_hlc(t)
 
                 # check buy conditions
-                if self.trader.check_control(hlc=hlc, kind='buy'):
+                if self.trader.check_control(hlcv=hlcv, kind='buy'):
 
                     # buying
-                    _ = self.trader.buy(price=hlc[2][-1], coin=self.coin)
+                    _ = self.trader.buy(price=hlcv[2][-1], coin=self.coin)
 
 
             # wait for selling
             else:
 
-                hlc, price = self.get_next_fake_hlc(t=t, same=True)
+                hlcv, price = self.get_next_fake_hlcv(t=t, same=True)
 
                 # check sell conditions
-                if self.trader.check_control(hlc=hlc, kind='sell'):
+                if self.trader.check_control(hlcv=hlcv, kind='sell'):
 
                     # selling
                     _ = self.trader.sell(price=price)
