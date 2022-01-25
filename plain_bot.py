@@ -163,7 +163,7 @@ class Trader:
 
         elif kind == 'sell':
 
-            price = hlc[2][-1]
+            price = hlcv[2][-1]
             self.update_stoploss(price=price)
 
             if price < self.stoploss_price:
